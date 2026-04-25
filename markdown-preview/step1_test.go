@@ -2,11 +2,12 @@ package main
 
 import (
 	"fmt"
+	"testing"
 )
 
-func main() {
+func TestStep1(t *testing.T) {
 	// Markdownフォーマットの文字列
-	input := []byte(`# Hello World!!`)
+	input := []byte(`# TEST`)
 
 	// MarkdownからHTMLに変換
 	output, err := ConvertHTML(input)

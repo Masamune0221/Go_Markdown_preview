@@ -2,12 +2,10 @@ package main
 
 import (
 	"log"
-	"time"
 )
 
 // エラーハンドラーの構造体
 type ErrorHandler struct {
-	timestamp  time.Time
 	errMessage string
 	err        error
 }
@@ -17,7 +15,7 @@ type ErrorHandler struct {
  * エラーが発生した場合、指定されたメッセージと共にログを出力し、プログラムを終了する
  **/
 func (e ErrorHandler) Handle() {
-	log.Fatalf("ERROR at %s: %s (Detail: %v)\n", e.timestamp.Format("2006-01-02 15:04:05"), e.errMessage, e.err)
+	log.Fatalf("ERROR at %s: %v\n", e.errMessage, e.err)
 }
 
 /**
@@ -28,7 +26,6 @@ func (e ErrorHandler) Handle() {
  **/
 func NewErrorHandler(err error, message string) ErrorHandler {
 	return ErrorHandler{
-		timestamp:  time.Now(),
 		err:        err,
 		errMessage: message,
 	}
