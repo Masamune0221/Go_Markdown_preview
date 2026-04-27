@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"net/http"
+	"os"
 )
 
 /**
@@ -12,9 +13,12 @@ import (
  **/
 func previewHandler(w http.ResponseWriter, r *http.Request) {
 	// Markdownフォーマットの文字列
-	input := []byte(`### Hello World!!
-### Hello World!!
-### Hello World!!`)
+	input, err := os.ReadFile("target/sample.md")
+	if err != nil {
+		errHandler := NewErrorHandler(err, "Failed to read markdown file")
+		errHandler.Handle(w, r)
+		return
+	}
 	// MarkdownをHTMLに変換
 	output, err := ConvertHTML(input)
 	// エラーハンドリング

@@ -16,6 +16,15 @@ const htmlTemplate = `
 	<div class="max-w-3xl mx-auto bg-white dark:bg-slate-800 p-10 rounded-xl shadow-lg prose transition-colors duration-300">
 		%s
 	</div>
+	<script>
+		const socket = new WebSocket("ws://" + window.location.host + "/ws")
+		socket.onmessage = function(event) {
+			// メッセージが来たら、ブラウザをリロードする
+			if (event.data === "update") {
+				window.location.reload()
+			}
+		}
+	</script>
 </body>
 </html>
 `

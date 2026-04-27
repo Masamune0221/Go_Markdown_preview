@@ -9,7 +9,7 @@ func main() {
 
 	// ファイルが変更された時の処理（コールバック）を渡す
 	go watchFile("target/sample.md", func() {
-		fmt.Println("✍️  ファイルが保存されました！(この後Step4でブラウザを自動更新させます)")
+		broadcast()
 	})
 	// HTTPサーバーを設定
 	// 静的ファイルの配信を設定
@@ -17,7 +17,7 @@ func main() {
 	http.Handle("/static/", http.StripPrefix("/static/", fs))
 	// メインハンドラーを設定
 	http.HandleFunc("/", previewHandler)
-
+	http.HandleFunc("/ws", wsHandler)
 	fmt.Println("Server is running on http://localhost:8080")
 	// HTTPサーバーを起動
 	err := http.ListenAndServe(":8080", nil)
