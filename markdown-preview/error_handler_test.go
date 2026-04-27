@@ -8,5 +8,5 @@ import (
 func TestErrorHandler(t *testing.T) {
 	err := errors.New("エラーが発生しました")
 	handler := NewErrorHandler(err, "テストです")
-	handler.Handle()
+	handler.Handle(nil, nil)
 }

@@ -2,20 +2,25 @@ package main
 
 import (
 	"fmt"
+	"net/http"
 )
 
 func main() {
-	// Markdownフォーマットの文字列
-	input := []byte(`# Hello World!!`)
 
-	// MarkdownからHTMLに変換
-	output, err := ConvertHTML(input)
+	// HTTPサーバーを設定
+	// 静的ファイルの配信を設定
+	fs := http.FileServer(http.Dir("static"))
+	http.Handle("/static/", http.StripPrefix("/static/", fs))
+	// メインハンドラーを設定
+	http.HandleFunc("/", previewHandler)
+
+	fmt.Println("Server is running on http://localhost:8080")
+	// HTTPサーバーを起動
+	err := http.ListenAndServe(":8080", nil)
+	// エラーハンドリング
 	if err != nil {
-		errorHandler := NewErrorHandler(err, "Failed to convert markdown to html")
-		errorHandler.Handle()
+		errHandler := NewErrorHandler(err, "Failed to start server")
+		errHandler.Handle(nil, nil)
+		return
 	}
-
-	// HTML文字列を表示
-	fmt.Println(output.String())
-
 }
