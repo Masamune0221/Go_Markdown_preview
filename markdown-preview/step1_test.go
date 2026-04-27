@@ -13,7 +13,7 @@ func TestStep1(t *testing.T) {
 	output, err := ConvertHTML(input)
 	if err != nil {
 		errorHandler := NewErrorHandler(err, "Failed to convert markdown to html")
-		errorHandler.Handle()
+		errorHandler.Handle(nil, nil)
 	}
 
 	// HTML文字列を表示
