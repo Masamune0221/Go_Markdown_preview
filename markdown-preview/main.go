@@ -7,6 +7,10 @@ import (
 
 func main() {
 
+	// ファイルが変更された時の処理（コールバック）を渡す
+	go watchFile("target/sample.md", func() {
+		fmt.Println("✍️  ファイルが保存されました！(この後Step4でブラウザを自動更新させます)")
+	})
 	// HTTPサーバーを設定
 	// 静的ファイルの配信を設定
 	fs := http.FileServer(http.Dir("static"))
